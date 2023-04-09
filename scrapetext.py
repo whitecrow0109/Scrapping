@@ -17,5 +17,5 @@ soup = getSoup('https://pythonscraping.com/pages/page3.html')
 if soup == None:
     print("Page couldn't be found")
 else:
-    for img in soup.find_all('img', {'src':re.compile('\.\.\/img\/gifts/img.*\.jpg')}):
-        print(img['src'])
+    for tag in soup.find_all(lambda tag: len(tag.attrs) == 2):
+        print(tag)
