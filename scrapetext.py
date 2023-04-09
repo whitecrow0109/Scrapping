@@ -1,23 +1,26 @@
-from urllib.request import urlopen
+import requests
 from urllib.error import HTTPError
 from urllib.error import URLError
 from bs4 import BeautifulSoup
 
 def getTitle(url):
     try:
-        page = urlopen(url)
+        page = requests.get(url)
     except HTTPError as e:
         return None
     try:
-        soup = BeautifulSoup(page.read(), 'html.parser')
+        soup = BeautifulSoup(page.content, 'html.parser')
         title = soup.body.h1
     except AttributeError as e:
         return None
-    return title
+    return title, soup
 
 
-title = getTitle('http://pythonscraping.com/pages/page1.html')
+title, soup = getTitle('http://www.pythonscraping.com/pages/warandpeace.html')
 if title == None:
     print("Title couldn't be found")
 else:
     print(title)
+    nameList = soup.find_all('span', class_="green")
+    for name in nameList:
+        print(name.text)
