@@ -2,6 +2,7 @@ import requests
 from urllib.error import HTTPError
 from urllib.error import URLError
 from bs4 import BeautifulSoup
+import re
 
 def getSoup(url):
     try:
@@ -16,5 +17,5 @@ soup = getSoup('https://pythonscraping.com/pages/page3.html')
 if soup == None:
     print("Page couldn't be found")
 else:
-    for price in soup.find_all('img'):
-        print(price.parent.previous_sibling.text)
+    for img in soup.find_all('img', {'src':re.compile('\.\.\/img\/gifts/img.*\.jpg')}):
+        print(img['src'])
