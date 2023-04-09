@@ -16,5 +16,5 @@ soup = getSoup('https://pythonscraping.com/pages/page3.html')
 if soup == None:
     print("Page couldn't be found")
 else:
-    for sibling in soup.find(id="giftList").tr.next_siblings:
-        print(sibling)
+    for price in soup.find_all('img'):
+        print(price.parent.previous_sibling.text)
