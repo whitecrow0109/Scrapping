@@ -3,24 +3,18 @@ from urllib.error import HTTPError
 from urllib.error import URLError
 from bs4 import BeautifulSoup
 
-def getTitle(url):
+def getSoup(url):
     try:
         page = requests.get(url)
     except HTTPError as e:
         return None
-    try:
-        soup = BeautifulSoup(page.content, 'html.parser')
-        title = soup.body.h1
-    except AttributeError as e:
-        return None
-    return title, soup
+    soup = BeautifulSoup(page.content, 'html.parser')
+    return soup
 
 
-title, soup = getTitle('http://www.pythonscraping.com/pages/warandpeace.html')
-if title == None:
-    print("Title couldn't be found")
+soup = getSoup('https://pythonscraping.com/pages/page3.html')
+if soup == None:
+    print("Page couldn't be found")
 else:
-    print(title)
-    nameList = soup.find_all('span', class_="green")
-    for name in nameList:
-        print(name.text)
+    for child in soup.find(id="giftList").children:
+        print(child)
