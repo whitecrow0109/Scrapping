@@ -13,9 +13,10 @@ def getSoup(url):
     return soup
 
 
-soup = getSoup('https://pythonscraping.com/pages/page3.html')
+soup = getSoup('https://www.pdfdrive.com/living-in-the-light-a-guide-to-personal-transformation-e10172273.html')
 if soup == None:
     print("Page couldn't be found")
 else:
-    for tag in soup.find_all(lambda tag: len(tag.attrs) == 2):
-        print(tag)
+    for link in soup.find_all('a'):
+        if 'href' in link.attrs:
+            print(link.attrs['href'])
